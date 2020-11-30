@@ -7,6 +7,8 @@ import java.sql.*;
 
 public class ssh {
 
+    //ssh -p 2222 s284201@se.ifmo.ru -Y -L1521:helios:1521
+
     private static Connection connection = null;
     private static Session session= null;
     private final int lport = 1521;

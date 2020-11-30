@@ -28,7 +28,7 @@ div.mainForm{
     background-color: antiquewhite;
     width: 600px;
     height: 200px;
-    float: right;
+    float: left;
     margin: 50px;
 
 }
@@ -85,4 +85,12 @@ polygon.graph-shape{
     fill: red;
 }
 
-
+.block{
+    word-wrap: normal;
+    text-indent: 5%;
+    padding: 25px;
+    border-radius: 25px;
+    background-color: antiquewhite;
+    float: right;
+    margin: 50px;
+}

@@ -11,11 +11,15 @@ public class HitDao {
     }
 
     public void save(HitStorageBD user) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
-        session.save(user);
-        tx1.commit();
-        session.close();
+        try {
+            Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+            Transaction tx1 = session.beginTransaction();
+            session.save(user);
+            tx1.commit();
+            session.close();
+        }catch (Exception e){
+            System.out.println("problems with save");
+        }
     }
 
     public void update(HitStorageBD user) {
@@ -35,8 +39,24 @@ public class HitDao {
     }
 
 
-    public List<HitStorageBD> findAll() {
-        List<HitStorageBD> Hits = (List<HitStorageBD>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From HitStorageBD").list();
+    public List<HitStorageBD> findAll() throws Exception {
+        List<HitStorageBD> Hits = null;
+        try {
+            Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+            Hits = (List<HitStorageBD>)  session.createQuery("From HitStorageBD").list();
+            session.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+            //throw new Exception("Something wrong with FIND ALL" );
+        }
         return Hits;
+    }
+
+    public void deleteAll() throws Exception {
+        List<HitStorageBD> Hits = findAll();
+        for (HitStorageBD hitResult : Hits) {
+            delete(hitResult);
+        }
     }
 }

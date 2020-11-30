@@ -3,9 +3,12 @@ package factories;
 import Cheker.HitCheckable;
 import Cheker.HitChecker;
 import models.HitResult;
+import models.storage.HitResultStorage;
 import validation.UnvalidExeption;
 import validation.Validatable;
 import validation.Validator;
+
+import javax.ejb.EJB;
 
 public class HitResultFactory implements HitResultCreationAbility{
 

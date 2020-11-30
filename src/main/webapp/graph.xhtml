@@ -5,25 +5,27 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://java.sun.com/jsf/html" lang="ru">
+      xmlns:p="http://java.sun.com/jsf/html"  lang="ru">
 
 <ui:include  src="HeaderTemplate.xhtml">
     <ui:param name="page" value="head"/>
 </ui:include>
-
-
-
 <h:head>
     <h:outputStylesheet library="css" name="graph.css" />
     <h:outputScript library="js" name="grafic.js" />
+    <h:outputScript library="js" name="main.js" />
     <h:outputScript library="js" name="http_code.jquery.com_jquery-3.5.1.js" />
     <title>Title</title>
 </h:head>
 <h:body>
+    <div class="block">
+        <span class="p-2">Start </span>
+        <h:link value="Main page" outcome="index"/>
+</div>
 <div class="diagram">
     <div class="border">
         <div class="convex-plate" id="graph-plate">
-            <svg id="graph-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" onclick="svgClick(event); clickSubmit()" onmousemove="svgMouth(event); validateAll()">
+            <svg id="graph-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" onclick="clickSubmit()" onmousemove="svgMouth(event); validateAll()">
 
                 <path class="graph-shape" d="M 100 150 A 50 50, 0, 0, 1, 150 100 L 150 150 Z"></path>
 
@@ -63,8 +65,8 @@
                 <text class="graph-label r-half-neg" text-anchor="start" x="160" y="205">-R/2</text>
                 <text class="graph-label r-half-pos" text-anchor="start" x="160" y="105">R/2</text>
                 <text class="graph-label r-whole-pos" text-anchor="start" x="160" y="55">R</text>
+                <circle cx="150" cy="150" r="4" id="cursorDot" fill-opacity="0"></circle>
                 <g id="points">
-                    <circle cx="150" cy="150" r="4" id="cursorDot" fill-opacity="0"></circle>
                 </g>
             </svg>
         </div>
@@ -72,88 +74,98 @@
 </div>
 <div class="mainForm">
     <div class="border" style="height: 100%">
-        <form name="myForm" method="post" action="server">
+        <h:form id="myForm">  <!--name="myForm" method="post" action="server"-->
             <h4>Введите координаты точки</h4>
             <table class="Form">
                 <tr><td colspan="2"><span id="errorAns" class="errorAns"></span></td></tr>
                 <tr>
                     <td><div style="width: 120px">Изменение Х:</div></td>
                     <td><div style="width: 400px">
-                        <h:selectOneRadio value="#{UserData.xValue}" required="true">
-                            <f:selectItem itemValue= "-5" itemLabel="-5" />
-                            <f:selectItem itemValue= "-4" itemLabel="-4" />
-                            <f:selectItem itemValue= "-3" itemLabel="-3" />
-                            <f:selectItem itemValue= "-2" itemLabel="-2" />
-                            <f:selectItem itemValue= "-1" itemLabel="-1" />
-                            <f:selectItem itemValue= "0" itemLabel="0" />
-                            <f:selectItem itemValue= "1" itemLabel="1" />
-                            <f:selectItem itemValue= "2" itemLabel="2" />
-                            <f:selectItem itemValue= "3" itemLabel="3" />
-                        </h:selectOneRadio>
+                        <h:selectOneMenu id="selectX" value="#{userData.xValue}" required="true">
+                            <f:selectItem itemValue="-3" itemLabel="-3" />
+                            <f:selectItem itemValue="-2" itemLabel="-2" />
+                            <f:selectItem itemValue="-1" itemLabel="-1" />
+                            <f:selectItem itemValue="0" itemLabel="0" />
+                            <f:selectItem itemValue="1" itemLabel="1" />
+                            <f:selectItem itemValue="2" itemLabel="2" />
+                            <f:selectItem itemValue="3" itemLabel="3" />
+                            <f:selectItem itemValue="4" itemLabel="4" />
+                            <f:selectItem itemValue="5" itemLabel="5" />
+                        </h:selectOneMenu>
                     </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>Изменение Y:</td>
+                    <td>Изменение Y: (-3 ... 5)</td>
                     <td>
-                        <h:inputText required="true" id="formTextY" onkeydown="antiEnter(event)" label="(-3 ... 5)" value="#{UserData.yValue}"/>
-                        <label >(-3 ... 5) <input required id="formTextY"  name="formTextY"  type="text" onkeydown="antiEnter(event);" onkeyup="validateAll()"></label>
+                        <h:inputText required="true" id="formTextY" onkeydown="antiEnter(event)" value="#{userData.yValue}" onkeyup="validateAll()"/>
+                        <!-- <label >(-3 ... 5) <input required id="formTextY"  name="formTextY"  type="text" onkeydown="antiEnter(event);" onkeyup="validateAll()"></label>-->
                     </td>
                 </tr>
                 <tr>
                     <td>Изменение R:</td>
                     <td>
-                        <div >
-                            <h:selectOneRadio value="#{UserData.rValue}" required="true">
-                                <f:selectItem itemValue= "1" itemLabel="1" />
-                                <f:selectItem itemValue= "2" itemLabel="2" />
-                                <f:selectItem itemValue= "3" itemLabel="3" />
-                                <f:selectItem itemValue= "4" itemLabel="4" />
-                                <f:selectItem itemValue= "5" itemLabel="5" />
-                            </h:selectOneRadio>
+                        <div>
+                                <h:selectOneMenu id="selectR" onchange="resetR(); validateAll()" value="#{userData.rValue}" required="true">
+                                    <f:selectItem itemValue="1" itemLabel="1"/>
+                                    <f:selectItem itemValue="2" itemLabel="2"/>
+                                    <f:selectItem itemValue="3" itemLabel="3"/>
+                                    <f:selectItem itemValue="4" itemLabel="4"/>
+                                    <f:selectItem itemValue="5" itemLabel="5"/>
+                                </h:selectOneMenu>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <h:commandButton value="Submit" type="submit" action="#{UserData.yValue}">
-                            <f:ajax execute="@form" render="results-table"/>
+                        <h:commandButton value="Submit" type="button" onmouseover="validateAll()"
+                                         action="#{userData.submitHitResult}" id="submitButton" onclick="clearDots(); window.setTimeout(function(){location.reload()},1000)" styleClass="btn btn-primary submit-button">
+                            <f:ajax execute="@form" render="results-table" />
                         </h:commandButton> //TODO
-                        <label >Подтвердить: <button type="submit" name="submit" id=submitFormButton onmouseenter="validateAll()">Отправить</button></label>
+                        <h:commandButton value="Clear" type="button" action="#{tableView.clearTable}" id="clearTable" onclick="clearDots()">
+                            <f:ajax render="results-table" />
+                        </h:commandButton>
+                        <!--<label >Подтвердить: <button type="submit" name="submit" id=submitFormButton onmouseenter="validateAll()">Отправить</button></label>-->
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2" id="answer">
+                    <td colspan="2" > <!-- id="answer" -->
                     </td>
                     <td></td>
                 </tr>
             </table>
-        </form>
+        </h:form>
     </div>
 </div>
-<div class="answerTable">
-    <div class="mainAns">
-        <table class="formAns" id="prevAns" >
-            <thead>
-            <tr>
-                <th>X</th>
-                <th>Y</th>
-                <th>R</th>
-                <th>Area hit</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="hitResult" items="${sessionScope.hitResultStorage.hitResultList}">
-                <tr>
-                    <td>${hitResult.x}</td>
-                    <td>${hitResult.y}</td>
-                    <td>${hitResult.r}</td>
-                    <td>${hitResult.isHitted() ? "Yes" : "No"}</td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+    <div class="answerTable">
+        <div class="mainAns">
+            <h4  id="prevAns">Results table</h4>
+            <h:dataTable var="HitStorageBD" value="#{tableView.hitResultList}"
+                         styleClass="table table-hover text-center" id="results-table" >
+                <h:column>
+                    <f:facet name="header">X value</f:facet>
+                    #{HitStorageBD.x}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Y value</f:facet>
+                    #{HitStorageBD.y}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">R value</f:facet>
+                    #{HitStorageBD.r}
+                </h:column>
+
+                <h:column >
+                    <f:facet name="header">Area hit</f:facet>
+                    #{HitStorageBD.RES}
+                    <script >
+                        createCircleFromValue(#{HitStorageBD.x}, #{HitStorageBD.y},  #{HitStorageBD.r},  '#{HitStorageBD.RES}')
+                    </script>
+                </h:column>
+            </h:dataTable>
+        </div>
     </div>
-</div>
 </h:body>
 </html>

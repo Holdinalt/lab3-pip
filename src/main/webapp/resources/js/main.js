@@ -20,6 +20,8 @@ function checkY(str){
 function validate(xValue, yValue, rValue){
     let flag = true;
     console.log(xValue)
+    console.log(yValue)
+    console.log(rValue)
     if(!checkX(Number(xValue))){
         flag = false;
     }
@@ -39,30 +41,30 @@ function validate(xValue, yValue, rValue){
 }
 
 function showError(){
+    console.log("Make error")
     let errorPlace = document.getElementById("errorAns");
     errorPlace.innerHTML = "Не верные данные";
-    $('#submitFormButton').prop("disabled", true);
+    $('#myForm\\:submitButton').prop("disabled", true);
 }
 
 function hideError(){
+    console.log("all good")
     let errorPlace = document.getElementById("errorAns");
     errorPlace.innerHTML = " ";
-    $('#submitFormButton').prop("disabled", false);
+    $('#myForm\\:submitButton').prop("disabled", false);
 }
 
 function validateAll(){
-    let formSelectX = $("#selectX").val();
-    let formTextY = $("#formTextY").val();
-    let formSelectR = $("#selectR").val();
+    let formSelectX = $("#myForm\\:selectX").val();
+    let formTextY = $("#myForm\\:formTextY").val();
+    let formSelectR = $("#myForm\\:selectR").val();
     if(validate(formSelectX, formTextY, formSelectR)){
         hideError();
-        console.log("good")
     }else{
         showError("Неверные данные");
-        console.log("bad")
     }
 }
 
 function clickSubmit(){
-    $("#submitFormButton").click();
+    $("#myForm\\:submitButton").click();
 }

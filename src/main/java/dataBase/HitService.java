@@ -3,11 +3,13 @@ package dataBase;
 
 import java.util.List;
 
-public class HitService {
 
-    private HitDao hitDao = new HitDao();
+public class HitService{
+
+    HitDao hitDao;
 
     public HitService() {
+        hitDao = new HitDao();
     }
 
     public HitStorageBD findHit(int id) {
@@ -26,8 +28,12 @@ public class HitService {
         hitDao.update(hit);
     }
 
-    public List<HitStorageBD> findAllHits() {
+    public List<HitStorageBD> findAllHits() throws Exception {
         return hitDao.findAll();
+    }
+
+    public void deleteAllHits() throws Exception {
+        hitDao.deleteAll();
     }
 
 }

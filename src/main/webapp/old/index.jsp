@@ -109,13 +109,15 @@
                 <tr>
                     <td>Изменение R:</td>
                     <td>
-                        <select id="selectR" name="selectR" onchange="resetR(); validateAll()">
-                            <option value="1" selected="selected">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+                        <div id="radiosR">
+                            <select id="selectR" name="selectR" onchange="resetR(); validateAll()">
+                                <option value="1" selected="selected">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
                     </td>
                 </tr>
                 <tr>

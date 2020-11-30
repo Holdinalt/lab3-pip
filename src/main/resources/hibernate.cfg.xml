@@ -7,9 +7,7 @@
     <session-factory>
         <!-- Database connection settings -->
         <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
-        <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:orbis</property>
-        <property name="hibernate.connection.username">s284201</property>
-        <property name="hibernate.connection.password">pass</property>
+        <property name="hibernate.connection.datasource">java:/OracleDS</property>
         <!-- JDBC connection pool (use the built-in) -->
         <property name="hibernate.connection.pool_size">1</property>
         <!-- Echo all executed SQL to stdout -->
